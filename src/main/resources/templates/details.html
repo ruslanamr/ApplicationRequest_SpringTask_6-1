@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main.html">
+<head th:insert="~{sdn}">
+  <meta charset="UTF-8">
+  <title>App Requests</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <br>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+
+        <div class="card-header">
+          <h5 class="card-title" th:text="'Заявка от ' + ${details.userName}"></h5>
+        </div>
+        <div class="card-body" style="height: 150px;">
+          <h6 class="card-title" style="color: #0a58ca"
+              th:text="'Курс: ' + ${details.courseName}"></h6>
+          <p th:text="'Комментарии: ' + ${details.comments}"></p>
+          <h6 class="card-title" th:text="'Телефон ' + ${details.phone}"></h6>
+        </div>
+        <div class="card-footer">
+          <h5 th:text="${details.handled == true}? 'Заявка обработана!' : 'Заявка не обработана!'"
+              th:class="${details.handled == true}? 'text-success' : 'text-danger'"></h5>
+        </div>
+      </div>
+      <br>
+      <button th:style="${details.handled==true}? 'display:none'" type="button" data-bs-toggle="modal" data-bs-target="#obrabotka" class="btn btn-success">Обработать заявку</button>
+
+
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить заявку</button>
+      <br>
+    </div>
+  </div>
+  <!-- Modal -->
+  <form th:action="${'/delerequest/'+details.id}" method="post">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Вы уверены, что хотите удалить заявку?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+            <button class="btn btn-primary">Да</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Modal -->
+  <form th:action="${'/obrabotka/'+details.id}" method="post">
+    <div class="modal fade" id="obrabotka" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Вы уверены, что хотите обработать заявку?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+            <button class="btn btn-primary">Да</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+</body>
+</html>
