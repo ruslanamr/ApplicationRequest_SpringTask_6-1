@@ -21,7 +21,7 @@ public class HomeController {
 
   @GetMapping("/")
   public String home(Model model) {
-    model.addAttribute("requests", requestService.getRequests());
+    model.addAttribute("requests", requestService.getListRequests());
     return "home";
   }
 
@@ -33,19 +33,19 @@ public class HomeController {
 
   @GetMapping("/details/{id}")
   public String details(@PathVariable Long id, Model model) {
-    model.addAttribute("details", requestService.getRequestById(id));
+    model.addAttribute("details", requestService.getReqById(id));
     return "details";
   }
 
   @PostMapping("/delerequest/{id}")
   public String deletequest(@PathVariable Long id) {
-    requestService.deleteRequestById(id);
+    requestService.deleteRequest(id);
     return "redirect:/";
   }
 
   @PostMapping("/obrabotka/{id}")
   public String obrabotka(@PathVariable Long id) {
-    AppRequest appRequest = requestService.getRequestById(id);
+    AppRequest appRequest = requestService.getReqById(id);
     appRequest.setHandled(true);
     requestService.addRequest(appRequest);
     return "redirect:/";

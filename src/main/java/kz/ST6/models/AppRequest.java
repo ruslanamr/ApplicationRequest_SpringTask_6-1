@@ -31,6 +31,9 @@ public class AppRequest {
   @Column(columnDefinition = "TEXT")
   private String comments;
   private String phone;
+
+
+  @Column(name = "handled", columnDefinition = "boolean default false")
   private boolean handled;
 
 }
