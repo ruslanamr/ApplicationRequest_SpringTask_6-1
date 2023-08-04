@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success" xmlns:th="http://www.thymeleaf.org">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">CRM система</a>
+    <a class="navbar-brand" href="#" th:text="#{label.CRM}"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -9,27 +9,38 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/">Все завки</a>
+          <a class="nav-link" aria-current="page" href="/" th:text="#{label.All}"></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/newreq">Новые заявки</a>
+          <a class="nav-link" href="/newreq" th:text="#{label.Newreq}"></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/oldreq">Обработанные заявки</a>
+          <a class="nav-link" href="/oldreq" th:text="#{label.Procreq}"></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addTaskModal">Добавить
-            заявку</a>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addTaskModal" th:text="#{label.Addreq}"></a>
         </li>
+
       </ul>
+
     </div>
+    <ul class="navbar-nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+         aria-expanded="false" th:text="#{label.lang} + '  '"></a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="?lng=ru">Русский</a></li>
+        <li><a class="dropdown-item" href="?lng=en">English</a></li>
+      </ul>
+    </li>
+    </ul>
     <form class="d-flex" action="/search" method="get" role="search">
-      <input name="search" class="form-control me-2" type="search" placeholder="поиск"
+      <input name="search" class="form-control me-2" type="search" th:placeholder="#{label.search}"
              aria-label="Search">
-      <button class="btn btn-outline-light" type="submit">Поиск</button>
+      <button class="btn btn-outline-light" type="submit" th:text="#{label.search}"></button>
     </form>
   </div>
-</nav>
+
 
 <form action="/addrequest" method="post">
   <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -37,17 +48,17 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Создание новой заявки</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="#{label.CreateNewReq}" ></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal"
                   aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">ФИО:</label>
+            <label class="form-label" th:text="#{label.fullname}" ></label>
             <input name="userName" type="text" class="form-control">
           </div>
           <div class="mb-3">
-            <label class="form-label">Курс:</label>
+            <label class="form-label" th:text="#{label.cource}"></label>
             <select class="form-select" name="courseName">
               <option>Java Start</option>
               <option>Java Core</option>
@@ -58,21 +69,22 @@
             </select>
           </div>
           <div class="mb-3">
-            <label class="form-label">Телефон</label>
+            <label class="form-label" th:text="#{label.tel}"></label>
             <input name="phone" type="tel" maxlength="50"
                    placeholder="+7 ___ _______" class="form-control">
           </div>
           <div class="mb-3">
-            <label class="form-label">Комментарии:</label>
-            <textarea name="comments" type="text" placeholder="напишите комментарии"
+            <label class="form-label" th:text="#{label.comments}"></label>
+            <textarea name="comments" type="text"
                       class="form-control"> </textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-          <button class="btn btn-primary">Добавить заявку</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{button.close}"></button>
+          <button class="btn btn-primary" th:text="#{button.create}"></button>
         </div>
       </div>
     </div>
   </div>
 </form>
+</nav>

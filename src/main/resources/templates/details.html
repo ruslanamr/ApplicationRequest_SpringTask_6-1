@@ -14,24 +14,24 @@
       <div class="card">
 
         <div class="card-header">
-          <h5 class="card-title" th:text="'Заявка от ' + ${details.userName}"></h5>
+          <h5 class="card-title" th:text="#{label.reqby} + ${details.userName}"></h5>
         </div>
         <div class="card-body" style="height: 150px;">
           <h6 class="card-title" style="color: #0a58ca"
-              th:text="'Курс: ' + ${details.courseName}"></h6>
-          <p th:text="'Комментарии: ' + ${details.comments}"></p>
-          <h6 class="card-title" th:text="'Телефон ' + ${details.phone}"></h6>
+              th:text="#{label.cource}+ ${details.courseName}"></h6>
+          <p th:text="#{label.comments} + ${details.comments}"></p>
+          <h6 class="card-title" th:text="#{label.tel}+ ${details.phone}"></h6>
         </div>
         <div class="card-footer">
-          <h5 th:text="${details.handled == true}? 'Заявка обработана!' : 'Заявка не обработана!'"
+          <h5 th:text="${details.handled == true}? #{label.processed} : #{label.NotProcessed}"
               th:class="${details.handled == true}? 'text-success' : 'text-danger'"></h5>
         </div>
       </div>
       <br>
-      <button th:style="${details.handled==true}? 'display:none'" type="button" data-bs-toggle="modal" data-bs-target="#obrabotka" class="btn btn-success">Обработать заявку</button>
+      <button th:style="${details.handled==true}? 'display:none'" type="button" data-bs-toggle="modal" data-bs-target="#obrabotka" class="btn btn-success" th:text="#{button.ProcessingRequest}"></button>
 
 
-      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить заявку</button>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:text="#{button.DeleteRequest}"></button>
       <br>
     </div>
   </div>
@@ -41,12 +41,12 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5">Вы уверены, что хотите удалить заявку?</h1>
+            <h1 class="modal-title fs-5" th:text="#{label.youSuredeleteRequest}"></h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-            <button class="btn btn-primary">Да</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{button.no}"></button>
+            <button class="btn btn-primary" th:text="#{button.yes}"></button>
           </div>
         </div>
       </div>
@@ -59,12 +59,12 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5">Вы уверены, что хотите обработать заявку?</h1>
+            <h1 class="modal-title fs-5" th:text="#{label.youSureProcessRequest}" ></h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-            <button class="btn btn-primary">Да</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{button.no}"></button>
+            <button class="btn btn-primary" th:text="#{button.yes}"></button>
           </div>
         </div>
       </div>

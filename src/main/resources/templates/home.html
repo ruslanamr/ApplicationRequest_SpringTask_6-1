@@ -13,16 +13,16 @@
     <div class="col-sm-6" th:each="req : ${requests}">
       <div class="card">
         <div class="card-header" style="height: 80px">
-          <h5 class="card-title" th:text="'Заявка от ' + ${req.userName}"></h5>
-          <h6 th:style="${req.handled==true}? 'display:none' : 'color: red'">Не обработанная заявка</h6>
+          <h5 class="card-title" th:text="#{label.reqby} + ${req.userName}"></h5>
+          <h6 th:style="${req.handled==true}? 'display:none' : 'color: red'" th:text="#{label.NotProcessed}"></h6>
         </div>
         <div class="card-body" style="height: 150px">
-          <h6 class="card-title" style="color: #0a58ca" th:text="'Курс: ' + ${req.courseName}"></h6>
-          <p th:text="'Комментарии: ' + ${req.comments}"></p>
+          <h6 class="card-title" style="color: #0a58ca" th:text="#{label.cource} + ${req.courseName}"></h6>
+          <p th:text="#{label.comments} + ${req.comments}"></p>
         </div>
         <div class="card-footer">
-          <h6 class="card-title" th:text="'Телефон ' + ${req.phone}"></h6>
-          <a th:href="${'details/' + req.id}">Подробнее</a>
+          <h6 class="card-title" th:text="#{label.tel} + ${req.phone}"></h6>
+          <a th:href="${'details/' + req.id}" th:text="#{label.details}"></a>
         </div>
       </div>
       <br>
