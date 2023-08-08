@@ -17,7 +17,7 @@
           <h6 th:style="${req.handled==true}? 'display:none' : 'color: red'" th:text="#{label.NotProcessed}"></h6>
         </div>
         <div class="card-body" style="height: 150px">
-          <h6 class="card-title" style="color: #0a58ca" th:text="#{label.cource} + ${req.courseName}"></h6>
+          <h6 class="card-title" style="color: #0a58ca" th:text="#{label.cource} + ${req.course.name}"></h6>
           <p th:text="#{label.comments} + ${req.comments}"></p>
         </div>
         <div class="card-footer">

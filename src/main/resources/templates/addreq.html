@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main.html">
+<head th:insert="~{sdn}">
+  <meta charset="UTF-8">
+  <title>Details</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+  <form action="/addrequest" method="post">
+
+    <h1 th:text="#{label.CreateNewReq}"></h1>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="form-label" th:text="#{label.fullname}"></label>
+        <input name="userName" type="text" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" th:text="#{label.cource}"></label>
+        <select class="form-select" name="course">
+          <option th:each="Courses : ${courses}"
+                  th:text="${Courses.getName()} + '/ стоимость - ' + ${Courses.price} + ' тг.'"
+                  th:value="${Courses.id}">
+          </option>
+
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" th:text="#{label.tel}"></label>
+        <input name="phone" type="tel" maxlength="50"
+               placeholder="+7 ___ _______" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" th:text="#{label.comments}"></label>
+        <textarea name="comments" type="text"
+                  class="form-control"> </textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              th:text="#{button.close}"></button>
+      <button class="btn btn-primary" th:text="#{button.create}"></button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

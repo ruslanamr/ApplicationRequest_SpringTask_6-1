@@ -1,5 +1,6 @@
 package kz.ST6.controllers;
 
+import java.util.List;
 import kz.ST6.models.AppRequest;
 import kz.ST6.repositories.RequestRepository;
 import kz.ST6.services.RequestService;
@@ -19,10 +20,17 @@ public class HomeController {
   @Autowired
   public RequestRepository requestRepository;
 
+
   @GetMapping("/")
   public String home(Model model) {
     model.addAttribute("requests", requestService.getListRequests());
     return "home";
+  }
+
+  @GetMapping("/addreqform")
+  public String addreqform(Model model) {
+    model.addAttribute("courses", requestService.getListCourses());
+    return "addreq";
   }
 
   @PostMapping("/addrequest")
@@ -34,7 +42,15 @@ public class HomeController {
   @GetMapping("/details/{id}")
   public String details(@PathVariable Long id, Model model) {
     model.addAttribute("details", requestService.getReqById(id));
+    model.addAttribute("operators", requestService.getListOperators());
     return "details";
+  }
+
+  @PostMapping("deleteoperator")
+  public String deleteoperator(@RequestParam(name = "operator_id") Long operator_id,
+      @RequestParam(name = "request_id") Long request_id) {
+    requestService.deleteOperator(request_id, operator_id);
+    return "redirect:/details/" + request_id;
   }
 
   @PostMapping("/delerequest/{id}")
@@ -44,11 +60,13 @@ public class HomeController {
   }
 
   @PostMapping("/obrabotka/{id}")
-  public String obrabotka(@PathVariable Long id) {
+  public String obrabotka(@PathVariable Long id,
+      @RequestParam(name = "operators_name") List<Long> operators_name) {
+    requestService.processingOperators(id, operators_name);
     AppRequest appRequest = requestService.getReqById(id);
     appRequest.setHandled(true);
     requestService.addRequest(appRequest);
-    return "redirect:/";
+    return "redirect:/details/" + id;
   }
 
   @GetMapping("/newreq")
@@ -68,5 +86,6 @@ public class HomeController {
     model.addAttribute("requests", requestRepository.search(search));
     return "home";
   }
+
 
 }

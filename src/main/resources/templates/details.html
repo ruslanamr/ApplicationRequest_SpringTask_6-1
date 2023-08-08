@@ -16,9 +16,14 @@
         <div class="card-header">
           <h5 class="card-title" th:text="#{label.reqby} + ${details.userName}"></h5>
         </div>
-        <div class="card-body" style="height: 150px;">
+        <div class="card-body" style="height: 170px;">
           <h6 class="card-title" style="color: #0a58ca"
-              th:text="#{label.cource}+ ${details.courseName}"></h6>
+              th:text="#{label.cource}+ ${details.course.name}"></h6>
+          <h6 class="card-title" style="color: #0a58ca"
+              th:text="#{label.courcedes}+ ${details.course.description}"></h6>
+          <h6 class="card-title" style="color: #0a58ca"
+              th:text="#{label.courseprice} + ${details.course.price} + ' тг.'"></h6>
+
           <p th:text="#{label.comments} + ${details.comments}"></p>
           <h6 class="card-title" th:text="#{label.tel}+ ${details.phone}"></h6>
         </div>
@@ -28,24 +33,59 @@
         </div>
       </div>
       <br>
-      <button th:style="${details.handled==true}? 'display:none'" type="button" data-bs-toggle="modal" data-bs-target="#obrabotka" class="btn btn-success" th:text="#{button.ProcessingRequest}"></button>
+      <button th:style="${details.handled==true}? 'display:none'" type="button"
+              data-bs-toggle="modal" data-bs-target="#obrabotka" class="btn btn-success"
+              th:text="#{button.ProcessingRequest}"></button>
 
 
-      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" th:text="#{button.DeleteRequest}"></button>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+              data-bs-target="#deleteModal" th:text="#{button.DeleteRequest}"></button>
       <br>
+    </div>
+    <div th:style="${details.operators.isEmpty()}? 'display:none'">
+      <br>
+      <br>
+      <h3> Назначенные операторы:</h3>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>Удалить</th>
+          <th>Имя</th>
+          <th>Фамилия</th>
+          <th>Департамент</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detail : ${details.operators}">
+          <td>
+            <form action="/deleteoperator" method="post">
+              <input type="hidden" name="operator_id" th:value="${detail.id}">
+              <input type="hidden" name="request_id" th:value="${details.id}">
+              <button class="btn btn-danger">X</button>
+            </form>
+          </td>
+          <td th:text="${detail.name}"></td>
+          <td th:text="${detail.surname}"></td>
+          <td th:text="${detail.departament}"></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <!-- Modal -->
   <form th:action="${'/delerequest/'+details.id}" method="post">
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" th:text="#{label.youSuredeleteRequest}"></h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{button.no}"></button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    th:text="#{button.no}"></button>
             <button class="btn btn-primary" th:text="#{button.yes}"></button>
           </div>
         </div>
@@ -55,22 +95,44 @@
 
   <!-- Modal -->
   <form th:action="${'/obrabotka/'+details.id}" method="post">
-    <div class="modal fade" id="obrabotka" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <div class="modal fade" id="obrabotka" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog modal-lg ">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" th:text="#{label.youSureProcessRequest}" ></h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h1 class="modal-title fs-5" th:text="#{label.changeoperators}"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-striped table-hover">
+              <thead>
+              <tr>
+                <th>Выбрать</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Департамент</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="operator : ${operators}">
+                <td><input type="checkbox" name="operators_name" th:value="${operator.id}"></td>
+                <td th:text="${operator.name}"></td>
+                <td th:text="${operator.surname}"></td>
+                <td th:text="${operator.departament}"></td>
+              </tr>
+              </tbody>
+            </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{button.no}"></button>
-            <button class="btn btn-primary" th:text="#{button.yes}"></button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена
+            </button>
+            <button class="btn btn-primary">Назначить</button>
           </div>
         </div>
       </div>
     </div>
   </form>
-
 </div>
 </body>
 </html>
